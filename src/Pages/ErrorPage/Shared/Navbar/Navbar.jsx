@@ -32,7 +32,7 @@ const Navbar = () => {
       <li className="flex">
         <Link
           rel="noopener noreferrer"
-          to="/enents"
+          to="/events"
           className="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent dark:text-violet-400 dark:border-violet-400"
         >
           Events
