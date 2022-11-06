@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const EventCard = ({ evnt, handleDelete }) => {
@@ -98,12 +99,15 @@ const EventCard = ({ evnt, handleDelete }) => {
             >
               Delete
             </button>
-            <button
-              type="button"
-              className="px-8 py-3 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800"
-            >
-              Update
-            </button>
+            <Link to={`/events/update/${_id}`}>
+              {" "}
+              <button
+                type="button"
+                className="px-8 py-3 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800"
+              >
+                Update
+              </button>
+            </Link>
           </div>
         </div>
         <div className="lg:w-1/2 xl:w-3/5 dark:bg-gray-800">
