@@ -1,5 +1,6 @@
 import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const Home = () => {
@@ -66,6 +67,11 @@ const Home = () => {
           <button className="px-8 py-3 m-2 text-lg border rounded dark:text-gray-50 dark:border-gray-700">
             Sign Up
           </button>
+          <Link to="/createevent">
+            <button className="px-8 py-3 m-2 text-lg border rounded dark:text-gray-50 dark:border-gray-700">
+              Make Event
+            </button>
+          </Link>
         </div>
       </div>
     </section>
