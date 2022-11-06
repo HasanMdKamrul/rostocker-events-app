@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import Switch from "react-switch";
+import { ThemeContext } from "../../../../Contexts/ThemeProvider";
 
 const Navbar = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
+  console.log(theme);
+
   return (
     <header className="p-4 dark:bg-gray-800 dark:text-gray-100">
       <div className="container flex justify-between h-16 mx-auto">
@@ -63,6 +69,12 @@ const Navbar = () => {
           <button className="self-center px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">
             Sign up
           </button>
+
+          <Switch
+            className="mx-5"
+            onChange={() => toggleTheme()}
+            checked={theme}
+          />
         </div>
         <button className="p-4 lg:hidden">
           <svg
