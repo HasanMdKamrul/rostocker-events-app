@@ -1,13 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../Contexts/AuthProvider";
 import EventCard from "./EventCard";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
+  const { user } = useContext(AuthContext);
+
+  const handleDelete = (id) => {
+    try {
+      const deleteData = async () => {
+        const response = await fetch(`http://localhost:15000/events/${id}`, {
+          method: "DELETE",
+        });
+        const data = await response.json();
+        console.log(data);
+        if (data.success) {
+          toast.success(data.message);
+          const reamining = events.filter((evnt) => evnt._id !== id);
+          setEvents(reamining);
+        }
+      };
+      deleteData();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   useEffect(() => {
     const loadEvents = async () => {
       try {
-        const response = await fetch(`http://localhost:15000/events`);
+        const response = await fetch(
+          `http://localhost:15000/events?email=${user?.email}`
+        );
         const data = await response.json();
         setEvents(data.data);
       } catch (error) {
@@ -16,34 +43,14 @@ const Events = () => {
     };
 
     loadEvents();
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const upper = e.target.upper.value;
-    const lower = e.target.lower.value;
-
-    const findData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:15000/events?upper=${upper}&&lower=${lower}`
-        );
-        const data = await response.json();
-        setEvents(data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    findData();
-  };
+  }, [user?.email]);
 
   return (
     <div>
       <h1 className="text-5xl text-center text-white mt-5 font-extrabold">
         All Events
       </h1>
-      <form onSubmit={handleSubmit} className="mx-16">
+      <div className="mx-16">
         <fieldset className="w-full space-y-1 dark:text-gray-100">
           <label htmlFor="Search" className="hidden">
             Search
@@ -73,7 +80,7 @@ const Events = () => {
           </div>
         </fieldset>
         <fieldset className="w-full space-y-1 dark:text-gray-100">
-          <label for="Search" className="hidden">
+          <label htmlFor="Search" className="hidden">
             Search
           </label>
           <div className="relative">
@@ -100,13 +107,11 @@ const Events = () => {
             />
           </div>
         </fieldset>
-        <button type="submit" className="px-4 py-1 rounded mt-2  bg-sky-400">
-          Find
-        </button>
-      </form>
+        <button className="px-4 py-1 rounded mt-2  bg-sky-400">Find</button>
+      </div>
       <div>
-        {events.map((evnt) => (
-          <EventCard key={evnt._id} evnt={evnt} />
+        {events?.map((evnt) => (
+          <EventCard handleDelete={handleDelete} key={evnt._id} evnt={evnt} />
         ))}
       </div>
     </div>

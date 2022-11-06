@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
-const EventCard = ({ evnt }) => {
+const EventCard = ({ evnt, handleDelete }) => {
   const { user } = useContext(AuthContext);
-  const { image, name, date, fee, place, email } = evnt;
+  const { _id, image, name, date, fee, place, email } = evnt;
   return (
     <section className="dark:bg-gray-800 dark:text-gray-100 mt-12 mx-auto container">
       <div className="container flex flex-col-reverse mx-auto lg:flex-row">
@@ -89,6 +89,21 @@ const EventCard = ({ evnt }) => {
               <p className="text-lg font-medium leading-snug">{place}</p>
               <p className="leading-snug">{email}</p>
             </div>
+          </div>
+          <div>
+            <button
+              onClick={() => handleDelete(_id)}
+              type="button"
+              className="px-8 py-3 mr-2 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800"
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              className="px-8 py-3 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800"
+            >
+              Update
+            </button>
           </div>
         </div>
         <div className="lg:w-1/2 xl:w-3/5 dark:bg-gray-800">
