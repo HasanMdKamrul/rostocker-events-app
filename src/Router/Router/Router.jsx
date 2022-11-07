@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../../Layout/Main/Main";
+import AllEvents from "../../Pages/AllEvents/AllEvents";
 import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
 import EventPage from "../../Pages/EventPage/EventPage";
 import Events from "../../Pages/Events/Events";
@@ -23,6 +24,11 @@ const router = createBrowserRouter([
       {
         path: "/events",
         element: <Events />,
+      },
+      {
+        path: "/allevents",
+        element: <AllEvents />,
+        loader: () => fetch(`http://localhost:15000/allevents`),
       },
       {
         path: "//events/update/:id",

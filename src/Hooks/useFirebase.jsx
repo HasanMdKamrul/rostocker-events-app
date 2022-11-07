@@ -30,6 +30,7 @@ const useFirebase = () => {
   };
 
   const logOut = () => {
+    localStorage.removeItem("jwt-token");
     setLoading(true);
     return signOut(auth);
   };

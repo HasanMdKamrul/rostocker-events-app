@@ -17,7 +17,7 @@ const Home = () => {
           email: user?.email,
         };
 
-        // ** Ask for jwt token
+        // ** Ask for jwt token when the user logged in
 
         const sendPayload = async () => {
           try {

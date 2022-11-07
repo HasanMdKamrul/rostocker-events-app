@@ -5,7 +5,7 @@ import EventCard from "./EventCard";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+  const [count, setCount] = useState(0);
 
   const { user } = useContext(AuthContext);
 
@@ -17,6 +17,7 @@ const Events = () => {
         });
         const data = await response.json();
         console.log(data);
+
         if (data.success) {
           toast.success(data.message);
           const reamining = events.filter((evnt) => evnt._id !== id);
@@ -33,10 +34,16 @@ const Events = () => {
     const loadEvents = async () => {
       try {
         const response = await fetch(
-          `http://localhost:15000/events?email=${user?.email}`
+          `http://localhost:15000/events?email=${user?.email}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+            },
+          }
         );
         const data = await response.json();
         setEvents(data.data);
+        setCount(data.count);
       } catch (error) {
         console.log(error.message);
       }
@@ -48,7 +55,7 @@ const Events = () => {
   return (
     <div>
       <h1 className="text-5xl text-center text-white mt-5 font-extrabold">
-        All Events
+        All Events ({count})
       </h1>
       <div className="mx-16">
         <fieldset className="w-full space-y-1 dark:text-gray-100">
